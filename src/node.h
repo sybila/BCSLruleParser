@@ -32,6 +32,8 @@ namespace RuleParser
 
 	struct Node
 	{
+		using CHILDREN_TYPE = std::vector<Node*>;
+
 		Node(NodeType type) : Node(type, NODE_CTYPE_NODE) {}
 
 		void addChild(Node* child) { children.push_back(child); child->m_parent = this; }
@@ -41,8 +43,6 @@ namespace RuleParser
 		const CHILDREN_TYPE& getChildren() const { return children; }
 
 	protected:
-		using CHILDREN_TYPE = std::vector<Node*>;
-
 		Node(NodeType type, NodeClassType ctype) : m_ctype(ctype), m_type(type), m_parent(nullptr) {}
 
 	private:
