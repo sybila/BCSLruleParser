@@ -9,7 +9,7 @@
 #include "tokenizer.h"
 #include "node.h"
 
-namespace EquationParser
+namespace RuleParser
 {
 
 	enum TokenizerMode
@@ -40,7 +40,6 @@ namespace EquationParser
 
 		int getPos() { return m_pos; }
 		Token nextToken() { return _nextToken(0); }
-		// void back(const Token & t) { m_current -= t.value.size(); }
 
 	};
 

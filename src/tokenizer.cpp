@@ -1,7 +1,7 @@
 #include <iostream>
 #include "tokenizer.h"
 
-namespace EquationParser
+namespace RuleParser
 {
 
 	char Tokenizer::nextChar()

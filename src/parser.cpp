@@ -1,7 +1,7 @@
 #include <algorithm> // find
 #include "parser.h"
 
-namespace EquationParser
+namespace RuleParser
 {
 
 	Token Parser::expectGet(std::initializer_list<TokenType> tokens)

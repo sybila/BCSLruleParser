@@ -4,7 +4,7 @@
 #include "stream_factory.h"
 #include "parser.h"
 
-using namespace EquationParser;
+using namespace RuleParser;
 
 void jsonTree(std::ostream& ss, Node* node);
 

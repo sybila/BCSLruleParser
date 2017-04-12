@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace EquationParser
+namespace RuleParser
 {
 	struct InvalidSyntax : public std::runtime_error
 	{

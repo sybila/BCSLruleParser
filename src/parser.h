@@ -7,7 +7,7 @@
 #include "tokenizer.h"
 #include "node.h"
 
-namespace EquationParser
+namespace RuleParser
 {
 
 	struct Parser

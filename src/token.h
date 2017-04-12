@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace EquationParser
+namespace RuleParser
 {
 
 	enum TokenType
@@ -54,13 +54,5 @@ namespace EquationParser
 
 	};
 }
-
-// bool operator==(const EquationParser::Token & t, EquationParser::TokenType type) {
-// 	return t.type == type;
-// }
-
-// bool operator!=(const EquationParser::Token & t, EquationParser::TokenType type) {
-// 	return !(t == type);
-// }
 
 #endif

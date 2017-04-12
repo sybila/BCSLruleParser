@@ -4,7 +4,7 @@
 #include <vector>
 #include "token.h"
 
-namespace EquationParser
+namespace RuleParser
 {
 
 	enum NodeClassType
