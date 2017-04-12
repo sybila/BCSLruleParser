@@ -40,7 +40,7 @@ namespace EquationParser
 		Node* m_parent;
 		CHILDREN_TYPE children;
 
-		Node(NodeType type, NodeClassType ctype) : m_type(type), m_ctype(ctype), m_parent(nullptr) {}
+		Node(NodeType type, NodeClassType ctype) : m_ctype(ctype), m_type(type), m_parent(nullptr) {}
 	public:
 		Node(NodeType type) : Node(type, NODE_CTYPE_NODE) {}
 
