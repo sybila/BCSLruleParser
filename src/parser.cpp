@@ -1,7 +1,39 @@
+#include <algorithm> // find
 #include "parser.h"
 
 namespace EquationParser
 {
+
+	Token Parser::expectGet(std::initializer_list<TokenType> tokens)
+	{
+		Token tok = m_lastToken;
+		expect(tokens);
+		return tok;
+	}
+
+	void Parser::expect(std::initializer_list<TokenType> tokens)
+	{
+		if (std::find(tokens.begin(), tokens.end(), m_lastToken.type) == tokens.end())
+			expectedError(tokens);
+
+		nextToken();
+	}
+
+	void Parser::expectedError(std::initializer_list<TokenType> tokens)
+	{
+		std::string err("Unexpected ");
+		err += std::string(translateTokenType(m_lastToken.type)) + ", expecting one of: ";
+		bool first = true;
+		for (auto token : tokens)
+		{
+			if (first)
+				first = false;
+			else
+				err += ", ";
+
+			err += translateTokenType(token);
+		}
+	}
 
 	const char* Parser::translateTokenType(TokenType type) const
 	{

@@ -1,18 +1,17 @@
-CODE_DIR=src
-CC=g++
+SRCDIR=src
+BUILDDIR=build
+BINDIR=bin
+CC=g++ $(CFLAGS)
 CFLAGS=-std=c++14 -Wall
-LDFLAGS=
-SOURCES=main.cpp parser.cpp tokenizer.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=rule_parser
+.PHONY: all ruleparser clean
 
-all: $(SOURCES) $(EXECUTABLE)
+all: ruleparser
 
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
-
-.cpp.o:
-	$(CC) -C $(CODE_DIR) $(CFLAGS) $< -o $@
+ruleparser: $(BUILDDIR)/main.o $(BUILDDIR)/parser.o $(BUILDDIR)/tokenizer.o
+	$(CC) $(BUILDDIR)/main.o $(BUILDDIR)/parser.o $(BUILDDIR)/tokenizer.o -o $(BINDIR)/rule_parser
 
 clean:
-	rm *o rule_parser
+	rm $(BUILDDIR)/* $(BINDIR)/*
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CC) -c $< -o $@

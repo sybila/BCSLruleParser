@@ -1,9 +1,7 @@
 #include <iostream>
-#include <sstream>
 #include <fstream>
-#include <ctime>
 #include <vector>
-#include <functional>
+#include "stream_factory.h"
 #include "parser.h"
 
 using namespace EquationParser;
@@ -54,13 +52,12 @@ void jsonTree(std::ostream& ss, Node* node)
 
 enum CommType {
 	TYPE_JSON,
-	//TYPE_HTML_TEST,
 };
 
 enum StreamType {
 	STREAM_TYPE_UNK,
 	STREAM_TYPE_IO,
-	STREAM_TYPE_FILE
+	STREAM_TYPE_FILE,
 };
 
 void communicate(CommType type, std::istream& in, std::ostream& out)
@@ -82,53 +79,6 @@ void communicate(CommType type, std::istream& in, std::ostream& out)
 	}
 }
 
-template<typename T, typename U>
-class streamFactory
-{
-protected:
-	StreamType m_type;
-	U m_fstream;
-
-public:
-	streamFactory(std::string type) {
-		if (type == "stream")
-			m_type = STREAM_TYPE_IO;
-		else if (type.find("file:") == 0)
-		{
-			m_type = STREAM_TYPE_FILE;
-			m_fstream.open(type.substr(sizeof("file:") - 1));
-		}
-		else
-			m_type = STREAM_TYPE_UNK;
-	}
-};
-
-struct istreamFactory : public streamFactory<std::istream, std::ifstream>
-{
-	istreamFactory(std::string t) : streamFactory(t) {}
-	std::istream& get() {
-		switch (m_type)
-		{
-		case STREAM_TYPE_IO: return std::cin;
-		case STREAM_TYPE_FILE: return m_fstream;
-		default: throw std::invalid_argument("Invalid input_type");
-		}
-	}
-};
-
-struct ostreamFactory : public streamFactory<std::ostream, std::ofstream>
-{
-	ostreamFactory(std::string t) : streamFactory(t) {}
-	std::ostream& get() {
-		switch (m_type)
-		{
-		case STREAM_TYPE_IO: return std::cout;
-		case STREAM_TYPE_FILE: return m_fstream;
-		default: throw std::invalid_argument("Invalid output_type");
-		}
-	}
-};
-
 int main(int argc, const char* argv[])
 {
 	if (argc != 4)
@@ -141,10 +91,9 @@ int main(int argc, const char* argv[])
 	}
 
 	CommType type;
-	if (strcmp(argv[1], "json") == 0)
+	std::string typeRaw(argv[1]);
+	if (typeRaw == "json")
 		type = TYPE_JSON;
-	//else if (strcmp(argv[0], "htmltest") == 0)
-		//type = TYPE_HTML_TEST;
 
 	try {
 		istreamFactory iFact(argv[2]);

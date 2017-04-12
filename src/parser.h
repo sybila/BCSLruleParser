@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <iostream>
+#include <initializer_list>
 #include "exceptions.h"
 #include "token.h"
 #include "tokenizer.h"
@@ -21,7 +21,6 @@ namespace EquationParser
 		bool isEquals() const { return m_lastToken.type == TOKEN_EQUIVALENT || m_lastToken.type == TOKEN_IMPLIES; }
 		void nextToken()
 		{
-			// std::cout << translateTokenType(m_lastToken.type) << "-" << m_lastToken.value << std::endl;
 			if (m_lastToken.type == TOKEN_EOF)
 				throw EofException();
 
@@ -29,65 +28,10 @@ namespace EquationParser
 		}
 
 		void expect(TokenType token) { expect({token}); }
-
 		Token expectGet(TokenType token) { return expectGet({token}); }
-
-		Token expectGet(std::initializer_list<TokenType> tokens)
-		{
-			Token tok = m_lastToken;
-			expect(tokens);
-			return tok;
-		}
-
-		void expect(std::initializer_list<TokenType> tokens)
-		{
-			if (std::find(tokens.begin(), tokens.end(), m_lastToken.type) == tokens.end())
-				expectedError(tokens);
-
-			nextToken();
-		}
-
-		void expectedError(std::initializer_list<TokenType> tokens)
-		{
-			std::string err("Unexpected ");
-			err += std::string(translateTokenType(m_lastToken.type)) + ", expecting one of: ";
-			bool first = true;
-			for (auto token : tokens)
-			{
-				if (first)
-					first = false;
-				else
-					err += ", ";
-
-				err += translateTokenType(token);
-			}
-			// $pos = tokenizer->getPos() - 1;
-			// if($data === null)
-			// 	throw new InvalidSyntaxException(tokenizer, 'Unexpected "' . translateTokenType(lastToken.type) . '"', $pos);
-			// else if(is_array($data)) {
-			// 	$str = 'one of ';
-			// 	foreach($data as $d)
-			// 		$str .= '"' . translateTokenType($d) . '", ';
-			// 	$str = substr($str, 0, -2);
-			// }
-			// else
-			// 	$str = '"' . translateTokenType($data) . '"';
-
-			// throw new InvalidSyntaxException(tokenizer, 'Expected ' . $str . ', got "' . translateTokenType(lastToken.type) . '"', $pos);
-		}
-
-		// void parseNodeChildren(NodeType nodeType, TokenType tokenType, std::function<void(Node*)> callback, Node* parent)
-		// {
-		// 	Node* current = new Node(nodeType);
-		// 	parent->addChild(current);
-		// 	callback(current);
-
-		// 	while (lastToken.type == tokenType)
-		// 	{
-		// 		nextToken();
-		// 		callback(current);
-		// 	}
-		// }
+		Token expectGet(std::initializer_list<TokenType> tokens);
+		void expect(std::initializer_list<TokenType> tokens);
+		void expectedError(std::initializer_list<TokenType> tokens);
 
 		const char* translateTokenType(TokenType) const;
 		void deleteTreeHelper(Node* node);
