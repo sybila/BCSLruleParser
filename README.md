@@ -14,9 +14,9 @@ Every node has "type" and "children" values, some of them have "token" or "entit
 
 There are 11 possible node types:
 - **SEMICOLON** = 9 (items split with ;, 1 or 2 children, **EQUATION** always, **VARIABLE** optional)
-- **EQUATION** = 1 (always first child of **SEMICOLON**, items split with either <=> or =>, 1 or 2 children of type **EQUATION_SIDE**)
 
 _
+- **EQUATION** = 1 (always first child of **SEMICOLON**, items split with either <=> or =>, 1 or 2 children of type **EQUATION_SIDE**)
 - **EQUATION_SIDE** = 2 (items split with +, 1 or more children of type **STOICHIOMETRY**)
 - **STOICHIOMETRY** = 3 (has token, 1 child of type **RULE_AGENT**)
 - **RULE_AGENT** = 4 (items split with ::, 1 or more children of type **FULL_COMPOSITION**)
