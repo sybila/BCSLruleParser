@@ -1,6 +1,16 @@
 #ifndef STREAM_FACTORY_H
 #define STREAM_FACTORY_H
 
+enum CommType {
+	TYPE_JSON,
+};
+
+enum StreamType {
+	STREAM_TYPE_UNK,
+	STREAM_TYPE_IO,
+	STREAM_TYPE_FILE,
+};
+
 template<typename T, typename U>
 class streamFactory
 {

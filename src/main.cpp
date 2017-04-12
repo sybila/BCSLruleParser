@@ -50,16 +50,6 @@ void jsonTree(std::ostream& ss, Node* node)
 	ss << "]}";
 }
 
-enum CommType {
-	TYPE_JSON,
-};
-
-enum StreamType {
-	STREAM_TYPE_UNK,
-	STREAM_TYPE_IO,
-	STREAM_TYPE_FILE,
-};
-
 void communicate(CommType type, std::istream& in, std::ostream& out)
 {
 	while (in.good())
