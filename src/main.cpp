@@ -56,6 +56,10 @@ void communicate(CommType type, std::istream& in, std::ostream& out)
 	{
 		std::string line;
 		std::getline(in, line);
+
+		if (line.size() == 0)
+			continue;
+
 		try {
 			Parser p(line);
 			p.parse();
