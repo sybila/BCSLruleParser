@@ -9,7 +9,6 @@ namespace EquationParser
 		if (m_pos == m_end)
 			throw InvalidSyntax("Unexpected end of file", getPos());
 
-		// std::cout << "char(" << getPos() << "," << std::to_string((int)m_string[m_pos]) << ")" << m_string[m_pos] << std::endl;
 		return m_string[m_pos++];
 	}
 
@@ -37,7 +36,7 @@ namespace EquationParser
 		{
 			ch = nextChar();
 			if (m_expected.top() != ch)
-				throw InvalidSyntax(std::string("Unexpected ") + std::to_string(static_cast<int>(ch)) + ch + ", expecting " + m_expected.top(), getPos());
+				throw InvalidSyntax(std::string("Unexpected ") + ch + ", expecting " + m_expected.top(), getPos());
 
 			m_expected.pop();
 			tok.append(ch);
