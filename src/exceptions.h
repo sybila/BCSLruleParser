@@ -2,6 +2,7 @@
 #define EXCEPTIONS_H
 
 #include <exception>
+#include <stdexcept>
 #include <string>
 
 namespace EquationParser
