@@ -30,18 +30,8 @@ namespace RuleParser
 		NODE_VARIABLE_ENTITY
 	};
 
-	class Node
+	struct Node
 	{
-	protected:
-		using CHILDREN_TYPE = std::vector<Node*>;
-
-		NodeClassType m_ctype;
-		NodeType m_type;
-		Node* m_parent;
-		CHILDREN_TYPE children;
-
-		Node(NodeType type, NodeClassType ctype) : m_ctype(ctype), m_type(type), m_parent(nullptr) {}
-	public:
 		Node(NodeType type) : Node(type, NODE_CTYPE_NODE) {}
 
 		void addChild(Node* child) { children.push_back(child); child->m_parent = this; }
@@ -49,28 +39,37 @@ namespace RuleParser
 		NodeClassType getClass() const { return m_ctype; }
 		Node* getParent() const { return m_parent; }
 		const CHILDREN_TYPE& getChildren() const { return children; }
+
+	protected:
+		using CHILDREN_TYPE = std::vector<Node*>;
+
+		Node(NodeType type, NodeClassType ctype) : m_ctype(ctype), m_type(type), m_parent(nullptr) {}
+
+	private:
+		NodeClassType m_ctype;
+		NodeType m_type;
+		Node* m_parent;
+		CHILDREN_TYPE children;
 	};
 
-	class TokenNode : public Node
+	struct TokenNode : public Node
 	{
-	protected:
-		Token m_token;
-
-	public:
 		TokenNode(NodeType type) : Node(type, NODE_CTYPE_TOKEN) {}
 		TokenNode(NodeType type, Token token) : Node(type, NODE_CTYPE_TOKEN), m_token(token) {}
 		const Token& getToken() const { return m_token; }
 		void setToken(Token t) { m_token = t; }
+
+	private:
+		Token m_token;
 	};
 
-	class EntityNode : public Node
+	struct EntityNode : public Node
 	{
-	private:
-		Node* entity;
-
-	public:
 		EntityNode(NodeType type, Node* entity) : Node(type, NODE_CTYPE_ENTITY), entity(entity) {}
 		Node* getEntity() const	{ return entity; }
+
+	private:
+		Node* entity;
 	};
 
 }

@@ -12,6 +12,12 @@ namespace RuleParser
 
 	struct Parser
 	{
+		Parser(std::string equation) : m_tokenizer(Tokenizer(equation)), m_equation(equation), m_tree(nullptr) {}
+
+		void parse();
+		Node* getTree() const { return m_tree; }
+		void deleteTree() { deleteTreeHelper(m_tree); }
+
 	private:
 		Tokenizer m_tokenizer;
 		std::string m_equation;
@@ -28,13 +34,14 @@ namespace RuleParser
 		}
 
 		void expect(TokenType token) { expect({token}); }
+		void expect(std::initializer_list<TokenType> tokens);
 		Token expectGet(TokenType token) { return expectGet({token}); }
 		Token expectGet(std::initializer_list<TokenType> tokens);
-		void expect(std::initializer_list<TokenType> tokens);
 		void expectedError(std::initializer_list<TokenType> tokens);
 
 		const char* translateTokenType(TokenType) const;
 		void deleteTreeHelper(Node* node);
+
 		void parseStateEntity(Node* parent);
 		void parsePartialCompositionChildren(Node* parent);
 		void parsePartialComposition(Node* parent);
@@ -45,12 +52,6 @@ namespace RuleParser
 		void parseEquationPart(Node* parent);
 		void parseVariableChildren(Node* parent);
 		void parseVariablePart(Node* parent);
-
-	public:
-		Parser(std::string equation) : m_tokenizer(Tokenizer(equation)), m_equation(equation), m_tree(nullptr) {}
-		void parse();
-		Node* getTree() const { return m_tree; }
-		void deleteTree() { deleteTreeHelper(m_tree); }
 	};
 
 }

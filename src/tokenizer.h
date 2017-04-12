@@ -20,6 +20,10 @@ namespace RuleParser
 
 	struct Tokenizer
 	{
+		Tokenizer(std::string s) : m_string(s), m_pos(0), m_end(s.size()), m_mode(MODE_NORMAL) {}
+
+		int getPos() { return m_pos; }
+		Token nextToken() { return _nextToken(0); }
 
 	private:
 		std::string m_string;
@@ -34,12 +38,6 @@ namespace RuleParser
 		void modeNormal(Token& token, char ch, char prev);
 		void modeVariable(Token& token, char ch);
 		Token _nextToken(char prev);
-
-	public:
-		Tokenizer(std::string s) : m_string(s), m_pos(0), m_end(s.size()), m_mode(MODE_NORMAL) { }
-
-		int getPos() { return m_pos; }
-		Token nextToken() { return _nextToken(0); }
 
 	};
 

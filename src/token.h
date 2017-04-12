@@ -31,7 +31,6 @@ namespace RuleParser
 
 	struct Token
 	{
-	public:
 		TokenType type;
 		std::string value;
 		unsigned start;

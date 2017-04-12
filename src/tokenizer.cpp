@@ -50,7 +50,8 @@ namespace RuleParser
 
 	void Tokenizer::modeNormal(Token& tok, char ch, char prev)
 	{
-		switch(ch) {
+		switch(ch)
+		{
 			case '(': tok.type = TOKEN_LEFT_BRACKET; return;
 			case ')': tok.type = TOKEN_RIGHT_BRACKET; return;
 			case '{': tok.type = TOKEN_LEFT_BRACE; return;
@@ -105,7 +106,8 @@ namespace RuleParser
 
 	void Tokenizer::modeVariable(Token& tok, char ch)
 	{
-		switch(ch) {
+		switch(ch)
+		{
 			case '=': tok.type = TOKEN_EQUALS; return;
 			case '?': tok.type = TOKEN_VARIABLE; m_expected.push('X'); return;
 			case '{': tok.type = TOKEN_LEFT_BRACE; return;

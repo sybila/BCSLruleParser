@@ -11,14 +11,14 @@ void jsonTree(std::ostream& ss, Node* node);
 void jsonChildren(std::ostream& ss, Node* node)
 {
 	bool first = true;
-	for (Node* c : node->getChildren())
+	for (Node* child : node->getChildren())
 	{
 		if (first)
 			first = false;
 		else
 			ss << ",";
 
-		jsonTree(ss, c);
+		jsonTree(ss, child);
 	}
 }
 
