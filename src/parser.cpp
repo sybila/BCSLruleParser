@@ -26,7 +26,7 @@ namespace RuleParser
 		{
 			nextToken();
 			parent->addChild(new TokenNode(NODE_STATE, expectGet({TOKEN_ENT_NAME})));
-			expect(TOKEN_RIGHT_BRACE);
+			expect({TOKEN_RIGHT_BRACE});
 		}
 	}
 
@@ -57,7 +57,7 @@ namespace RuleParser
 		{
 			nextToken();
 			parsePartialCompositionChildren(current);
-			expect(TOKEN_RIGHT_BRACKET);
+			expect({TOKEN_RIGHT_BRACKET});
 		}
 		else
 			parseStateEntity(entNode);
@@ -153,12 +153,12 @@ namespace RuleParser
 
 	void Parser::parseVariableChildren(Node* parent)
 	{
-		parent->addChild(new TokenNode(NODE_VARIABLE_ENTITY, expectGet(TOKEN_ENT_NAME)));
+		parent->addChild(new TokenNode(NODE_VARIABLE_ENTITY, expectGet({TOKEN_ENT_NAME})));
 
 		while (m_lastToken.type == TOKEN_COMMA)
 		{
 			nextToken();
-			parent->addChild(new TokenNode(NODE_VARIABLE_ENTITY, expectGet(TOKEN_ENT_NAME)));
+			parent->addChild(new TokenNode(NODE_VARIABLE_ENTITY, expectGet({TOKEN_ENT_NAME})));
 		}
 	}
 
@@ -167,18 +167,18 @@ namespace RuleParser
 		if(m_lastToken.type == TOKEN_EOF)
 			return;
 
-		expect(TOKEN_SEMICOLON);
+		expect({TOKEN_SEMICOLON});
 
 		Token t = expectGet({TOKEN_VARIABLE});
-		expect(TOKEN_EQUALS);
+		expect({TOKEN_EQUALS});
 
-		expect(TOKEN_LEFT_BRACE);
+		expect({TOKEN_LEFT_BRACE});
 
 		Node* entNode = new TokenNode(NODE_VARIABLE, t);
 		parseVariableChildren(entNode);
 		parent->addChild(entNode);
 
-		expect(TOKEN_RIGHT_BRACE);
+		expect({TOKEN_RIGHT_BRACE});
 	}
 
 	void Parser::parse()

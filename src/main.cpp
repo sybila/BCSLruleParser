@@ -20,12 +20,14 @@ const char* translateTokenType(TokenType type)
 		case TOKEN_VERT_LINE: return "|";
 		case TOKEN_VARIABLE: return "?X";
 		case TOKEN_IMPLIES: return "=>";
-		case TOKEN_PLUS : return "+";
-		case TOKEN_DOUBLECOLON : return "::";
-		case TOKEN_EQUALS : return "=";
-		case TOKEN_MULTIPLE_NUM : return "number";
-		case TOKEN_COMMA : return ",";
-		case TOKEN_EQUIVALENT : return "<=>";
+		case TOKEN_PLUS: return "+";
+		case TOKEN_DOUBLECOLON: return "::";
+		case TOKEN_EQUALS: return "=";
+		case TOKEN_MULTIPLE_NUM: return "number";
+		case TOKEN_COMMA: return ",";
+		case TOKEN_EQUIVALENT: return "<=>";
+		case TOKEN_SPACE: return "whitespace";
+		case TOKEN_DOT: return ".";
 		default: return "unknown";
 	}
 }
@@ -113,17 +115,22 @@ void communicate(CommType type, std::istream& in, std::ostream& out)
 			p.deleteTree();
 		}
 		catch (const InvalidSyntax& e) {
-			out << "{\"error\":1,\"start\":" << e.m_start <<
-				",\"unexpected\":\"" << escapeJson(e.m_unexpected) <<
-				"\",\"expected\":[\"" << escapeJson(e.m_expected) << "\"]}" << std::endl;
+			out << "{\"error\":1,\"start\":" << e.start <<
+				",\"unexpected\":\"" << escapeJson(e.unexpected) <<
+				"\",\"expected\":[";
+
+			if (e.expected != '\0')
+				out << "\"" << escapeJson(e.expected) << "\"";
+
+			out << "]}" << std::endl;
 		}
 		catch (const InvalidSyntaxToken& e) {
-			out << "{\"error\":1,\"start\":" << e.m_start <<
-				",\"unexpected\":\"" << escapeJson(translateTokenType(e.m_unexpected)) <<
+			out << "{\"error\":1,\"start\":" << e.start <<
+				",\"unexpected\":\"" << escapeJson(e.unexpected) <<
 				"\",\"expected\":[";
 
 			bool first = true;
-			for (TokenType t : e.m_expected)
+			for (TokenType t : e.expected)
 			{
 				if (first)
 					first = false;
@@ -153,6 +160,11 @@ int main(int argc, const char* argv[])
 	std::string typeRaw(argv[1]);
 	if (typeRaw == "json")
 		type = TYPE_JSON;
+	else
+	{
+		std::cerr << "Invalid communication_type" << std::endl;
+		return 1;
+	}
 
 	try {
 		istreamFactory iFact(argv[2]);

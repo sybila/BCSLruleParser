@@ -38,17 +38,12 @@ namespace RuleParser
 
 		Token() : type(TOKEN_UNKNOWN), value(""), start(0), end(0) {}
 		Token(TokenType t) : type(t), value(""), start(0), end(0) {}
+		Token(TokenType t, std::string value) : type(t), value(value), start(0), end(0) {}
 
 		void append(char chr)
 		{
 			value += chr;
 			++end;
-		}
-
-		void pop()
-		{
-			value.resize(value.size() - 1);
-			--end;
 		}
 	};
 }

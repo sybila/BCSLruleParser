@@ -20,7 +20,7 @@ namespace RuleParser
 	Token Tokenizer::_nextToken(char prev)
 	{
 		if (m_pos == m_end)
-			return {TOKEN_EOF};
+			return {TOKEN_EOF, "end of input"};
 
 		Token tok;
 		tok.start = tok.end = getPos();
@@ -92,7 +92,7 @@ namespace RuleParser
 
 		while (m_pos != m_end)
 		{
-			if (!isdigit(ch) && tok.type != TOKEN_MULTIPLE_NUM)
+			if (!isdigit(ch) && tok.type == TOKEN_MULTIPLE_NUM)
 				tok.type = TOKEN_ENT_NAME;
 
 			ch = nextChar();

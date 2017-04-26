@@ -11,23 +11,23 @@ namespace RuleParser
 	struct InvalidSyntax : public std::runtime_error
 	{
 		InvalidSyntax(unsigned start, std::string unexpected) :
-			std::runtime_error(""), m_start(start), m_unexpected(unexpected) {}
+			std::runtime_error(""), start(start), unexpected(unexpected), expected('\0') {}
 		InvalidSyntax(unsigned start, std::string unexpected, char expected) :
-			std::runtime_error(""), m_start(start), m_unexpected(unexpected), m_expected(expected) {}
+			std::runtime_error(""), start(start), unexpected(unexpected), expected(expected) {}
 
-		unsigned m_start;
-		std::string m_unexpected;
-		char m_expected;
+		unsigned start;
+		std::string unexpected;
+		char expected;
 	};
 
 	struct InvalidSyntaxToken : public std::runtime_error
 	{
-		InvalidSyntaxToken(unsigned start, TokenType unexpected, std::initializer_list<TokenType> expected) :
-			std::runtime_error(""), m_start(start), m_unexpected(unexpected), m_expected(expected) {}
+		InvalidSyntaxToken(unsigned start, std::string unexpected, std::initializer_list<TokenType> expected) :
+			std::runtime_error(""), start(start), unexpected(unexpected), expected(expected) {}
 
-		unsigned m_start;
-		TokenType m_unexpected;
-		std::initializer_list<TokenType> m_expected;
+		unsigned start;
+		std::string unexpected;
+		std::initializer_list<TokenType> expected;
 	};
 
 	struct EofException : public std::runtime_error

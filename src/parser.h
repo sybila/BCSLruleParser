@@ -33,11 +33,9 @@ namespace RuleParser
 			m_lastToken = m_tokenizer.nextToken();
 		}
 
-		void expect(TokenType token) { expect({token}); }
 		void expect(std::initializer_list<TokenType> tokens);
-		Token expectGet(TokenType token) { return expectGet({token}); }
 		Token expectGet(std::initializer_list<TokenType> tokens);
-		void expectedError(std::initializer_list<TokenType> tokens) { throw InvalidSyntaxToken(m_lastToken.start, m_lastToken.type, tokens); }
+		void expectedError(std::initializer_list<TokenType> tokens) { throw InvalidSyntaxToken(m_lastToken.start, m_lastToken.value, tokens); }
 
 		void deleteTreeHelper(Node* node);
 
