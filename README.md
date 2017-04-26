@@ -4,7 +4,7 @@ usage: rule_parser \<communication_type\> \<input_type\> \<output_type\>
 - output_type: stream, file:\<path\>
 
 Each equation to parse is one line on the input  
-For each line on the input there is a line on the output containing JSON response: either **SEMICOLON** node or {"error": string, "start": int, "unexpected": "token name", "expected": ["token", "names"]}
+For each line on the input there is a line on the output containing JSON response: either **SEMICOLON** node or {"error":1, "start": int, "unexpected": "token name", "expected": ["token", "names"]}
 
 Every node has "type" and "children" values, some of them have "token" or "entity" values.
 - "type": string
