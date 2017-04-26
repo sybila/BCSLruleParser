@@ -24,6 +24,7 @@ namespace RuleParser
 		std::string err("Unexpected ");
 		err += std::string(translateTokenType(m_lastToken.type)) + ", expecting one of: ";
 		bool first = true;
+
 		for (auto token : tokens)
 		{
 			if (first)
@@ -33,6 +34,8 @@ namespace RuleParser
 
 			err += translateTokenType(token);
 		}
+
+		throw InvalidSyntax(err, m_tokenizer.getPos());
 	}
 
 	const char* Parser::translateTokenType(TokenType type) const
