@@ -7,7 +7,12 @@ namespace RuleParser
 	char Tokenizer::nextChar()
 	{
 		if (m_pos == m_end)
-			throw InvalidSyntax("Unexpected end of file", getPos());
+		{
+			if (m_expected.empty())
+				throw InvalidSyntax(getPos(), "end of input");
+			else
+				throw InvalidSyntax(getPos(), "end of input", m_expected.top());
+		}
 
 		return m_string[m_pos++];
 	}
@@ -36,14 +41,14 @@ namespace RuleParser
 		{
 			ch = nextChar();
 			if (m_expected.top() != ch)
-				throw InvalidSyntax(std::string("Unexpected ") + ch + ", expecting " + m_expected.top(), getPos());
+				throw InvalidSyntax(getPos(), std::string(1, ch), m_expected.top());
 
 			m_expected.pop();
 			tok.append(ch);
 		}
 
 		if (tok.type == TOKEN_UNKNOWN)
-			throw InvalidSyntax("Invalid token", getPos());
+			throw InvalidSyntax(tok.start, tok.value);
 
 		return tok;
 	}
@@ -75,21 +80,20 @@ namespace RuleParser
 				// no break/return intended
 		}
 
-		if (m_pos == m_end || !isEntChar(ch))
+		if (isEntChar(ch))
+		{
+			if (isdigit(ch))
+				tok.type = TOKEN_MULTIPLE_NUM;
+			else
+				tok.type = TOKEN_ENT_NAME;
+		}
+		else
 			return;
 
 		while (m_pos != m_end)
 		{
-			if (isdigit(ch))
-			{
-				if (tok.type == TOKEN_UNKNOWN)
-					tok.type = TOKEN_MULTIPLE_NUM;
-			}
-			else
-			{
-				if (tok.type == TOKEN_MULTIPLE_NUM || tok.type == TOKEN_UNKNOWN)
-					tok.type = TOKEN_ENT_NAME;
-			}
+			if (!isdigit(ch) && tok.type != TOKEN_MULTIPLE_NUM)
+				tok.type = TOKEN_ENT_NAME;
 
 			ch = nextChar();
 			if (!isEntChar(ch))
@@ -116,7 +120,7 @@ namespace RuleParser
 			case '.': tok.type = TOKEN_DOT; return;
 		}
 
-		if (m_pos == m_end || !isEntChar(ch))
+		if (!isEntChar(ch))
 			return;
 
 		tok.type = TOKEN_ENT_NAME;

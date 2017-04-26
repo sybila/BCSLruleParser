@@ -50,7 +50,6 @@ namespace RuleParser
 			value.resize(value.size() - 1);
 			--end;
 		}
-
 	};
 }
 

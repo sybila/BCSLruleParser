@@ -37,9 +37,8 @@ namespace RuleParser
 		void expect(std::initializer_list<TokenType> tokens);
 		Token expectGet(TokenType token) { return expectGet({token}); }
 		Token expectGet(std::initializer_list<TokenType> tokens);
-		void expectedError(std::initializer_list<TokenType> tokens);
+		void expectedError(std::initializer_list<TokenType> tokens) { throw InvalidSyntaxToken(m_lastToken.start, m_lastToken.type, tokens); }
 
-		const char* translateTokenType(TokenType) const;
 		void deleteTreeHelper(Node* node);
 
 		void parseStateEntity(Node* parent);

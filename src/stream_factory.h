@@ -11,6 +11,7 @@ enum StreamType
 	STREAM_TYPE_UNK,
 	STREAM_TYPE_IO,
 	STREAM_TYPE_FILE,
+	STREAM_TYPE_STRING,
 };
 
 template<typename T, typename U>
@@ -36,16 +37,29 @@ protected:
 
 struct istreamFactory : public streamFactory<std::istream, std::ifstream>
 {
-	istreamFactory(std::string t) : streamFactory(t) {}
+	istreamFactory(std::string t) : streamFactory(t)
+	{
+		if (t.find("eq:") == 0)
+		{
+			m_type = STREAM_TYPE_STRING;
+			m_sstream << t.substr(sizeof("eq:") - 1);
+			m_sstream.seekg(0);
+		}
+	}
+
 	std::istream& get()
 	{
 		switch (m_type)
 		{
 			case STREAM_TYPE_IO: return std::cin;
 			case STREAM_TYPE_FILE: return m_fstream;
+			case STREAM_TYPE_STRING: return m_sstream;
 			default: throw std::invalid_argument("Invalid input_type");
 		}
 	}
+
+private:
+	std::stringstream m_sstream;
 };
 
 struct ostreamFactory : public streamFactory<std::ostream, std::ofstream>

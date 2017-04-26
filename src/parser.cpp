@@ -19,48 +19,6 @@ namespace RuleParser
 		nextToken();
 	}
 
-	void Parser::expectedError(std::initializer_list<TokenType> tokens)
-	{
-		std::string err("Unexpected ");
-		err += std::string(translateTokenType(m_lastToken.type)) + ", expecting one of: ";
-		bool first = true;
-
-		for (auto token : tokens)
-		{
-			if (first)
-				first = false;
-			else
-				err += ", ";
-
-			err += translateTokenType(token);
-		}
-
-		throw InvalidSyntax(err, m_tokenizer.getPos());
-	}
-
-	const char* Parser::translateTokenType(TokenType type) const
-	{
-		switch(type) {
-			case TOKEN_EOF: return "end of input";
-			case TOKEN_ENT_NAME: return "entity name";
-			case TOKEN_LEFT_BRACKET: return "(";
-			case TOKEN_RIGHT_BRACKET: return ")";
-			case TOKEN_LEFT_BRACE: return "{";
-			case TOKEN_RIGHT_BRACE: return "}";
-			case TOKEN_SEMICOLON: return ";";
-			case TOKEN_VERT_LINE: return "|";
-			case TOKEN_VARIABLE: return "?X";
-			case TOKEN_IMPLIES: return "=>";
-			case TOKEN_PLUS : return "+";
-			case TOKEN_DOUBLECOLON : return "::";
-			case TOKEN_EQUALS : return "=";
-			case TOKEN_MULTIPLE_NUM : return "multiplication number";
-			case TOKEN_COMMA : return ",";
-			case TOKEN_EQUIVALENT : return "<=>";
-			default: return "unknown";
-		}
-	}
-
 	// X{A}
 	void Parser::parseStateEntity(Node* parent)
 	{
