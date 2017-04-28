@@ -1,6 +1,10 @@
 #ifndef STREAM_FACTORY_H
 #define STREAM_FACTORY_H
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 enum CommType
 {
 	TYPE_JSON,

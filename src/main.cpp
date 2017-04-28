@@ -1,103 +1,12 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
+
 #include "stream_factory.h"
+#include "json_helpers.h"
 #include "parser.h"
 
 using namespace RuleParser;
 
-const char* translateTokenType(TokenType type)
-{
-	switch(type) {
-		case TOKEN_EOF: return "end of input";
-		case TOKEN_ENT_NAME: return "entity name";
-		case TOKEN_LEFT_BRACKET: return "(";
-		case TOKEN_RIGHT_BRACKET: return ")";
-		case TOKEN_LEFT_BRACE: return "{";
-		case TOKEN_RIGHT_BRACE: return "}";
-		case TOKEN_SEMICOLON: return ";";
-		case TOKEN_VERT_LINE: return "|";
-		case TOKEN_VARIABLE: return "?X";
-		case TOKEN_IMPLIES: return "=>";
-		case TOKEN_PLUS: return "+";
-		case TOKEN_DOUBLECOLON: return "::";
-		case TOKEN_EQUALS: return "=";
-		case TOKEN_MULTIPLE_NUM: return "number";
-		case TOKEN_COMMA: return ",";
-		case TOKEN_EQUIVALENT: return "<=>";
-		case TOKEN_SPACE: return "whitespace";
-		case TOKEN_DOT: return ".";
-		default: return "unknown";
-	}
-}
-
-std::string escapeJson(char ch)
-{
-	if (ch == '"')
-		return "\\\"";
-
-	return std::string(1, ch);
-}
-
-std::string escapeJson(std::string str)
-{
-    size_t start_pos = 0, from = 0;
-
-    while ((start_pos = str.find('"', from)) != std::string::npos)
-    {
-        str.replace(from, 1, "\\\"");
-        from = start_pos;
-    }
-
-    return str;
-}
-
-void jsonTree(std::ostream& ss, Node* node);
-
-void jsonChildren(std::ostream& ss, Node* node)
-{
-	bool first = true;
-	for (Node* child : node->getChildren())
-	{
-		if (first)
-			first = false;
-		else
-			ss << ",";
-
-		jsonTree(ss, child);
-	}
-}
-
-void jsonTree(std::ostream& ss, Node* node)
-{
-	ss << "{\"type\":" << node->getType();
-	
-	switch (node->getClass())
-	{
-		case NODE_CTYPE_NODE:
-			break;
-		case NODE_CTYPE_TOKEN:
-		{
-			TokenNode* tn = reinterpret_cast<TokenNode*>(node);
-			ss << ",\"token\":\"" << tn->getToken().value << "\"";
-			break;
-		}
-		case NODE_CTYPE_ENTITY:
-		{
-			EntityNode* en = reinterpret_cast<EntityNode*>(node);
-			ss << ",\"entity\":";
-			jsonTree(ss, en->getEntity());
-			break;
-		}
-	}
-
-	ss << ",\"children\":[";
-	jsonChildren(ss, node);
-	ss << "]}";
-}
-
-void communicate(CommType type, std::istream& in, std::ostream& out)
+void jsonCommunicate(CommType type, std::istream& in, std::ostream& out)
 {
 	while (in.good())
 	{
@@ -110,37 +19,15 @@ void communicate(CommType type, std::istream& in, std::ostream& out)
 		try {
 			Parser p(line);
 			p.parse();
-			jsonTree(out, p.getTree());
+			JSON::convertTree(out, p.getTree());
 			out << std::endl;
 			p.deleteTree();
 		}
 		catch (const InvalidSyntax& e) {
-			out << "{\"error\":1,\"start\":" << e.start <<
-				",\"unexpected\":\"" << escapeJson(e.unexpected) <<
-				"\",\"expected\":[";
-
-			if (e.expected != '\0')
-				out << "\"" << escapeJson(e.expected) << "\"";
-
-			out << "]}" << std::endl;
+			JSON::convertException(out, e);
 		}
 		catch (const InvalidSyntaxToken& e) {
-			out << "{\"error\":1,\"start\":" << e.start <<
-				",\"unexpected\":\"" << escapeJson(e.unexpected) <<
-				"\",\"expected\":[";
-
-			bool first = true;
-			for (TokenType t : e.expected)
-			{
-				if (first)
-					first = false;
-				else
-					out << ",";
-
-				out << "\"" << escapeJson(translateTokenType(t)) << "\"";
-			}
-
-			out << "]}" << std::endl;
+			JSON::convertException(out, e);
 		}
 	}
 }
@@ -169,7 +56,7 @@ int main(int argc, const char* argv[])
 	try {
 		istreamFactory iFact(argv[2]);
 		ostreamFactory oFact(argv[3]);
-		communicate(type, iFact.get(), oFact.get());
+		jsonCommunicate(type, iFact.get(), oFact.get());
 	}
 	catch (const std::runtime_error& e) {
 		std::cerr << "error: " << e.what() << std::endl;

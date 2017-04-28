@@ -2,7 +2,7 @@ SRCDIR=src
 BUILDDIR=build
 BINDIR=bin
 CC=g++ $(CFLAGS)
-CFLAGS=-std=c++14 -Wall
+CFLAGS=-std=c++14 -Wall -fPIC
 .PHONY: all ruleparser clean
 
 all: ruleparser
