@@ -14,4 +14,6 @@ clean:
 	rm $(BUILDDIR)/* $(BINDIR)/*
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CC) -c $< -o $@
+	$(CC) -MMD -c $< -o $@
+
+-include $(BUILDDIR)/*.d
