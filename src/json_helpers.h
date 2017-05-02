@@ -50,8 +50,8 @@ namespace JSON
 
 		while ((start_pos = str.find('"', from)) != std::string::npos)
 		{
-			str.replace(from, 1, "\\\"");
-			from = start_pos;
+			str.replace(start_pos, 1, "\\\"");
+			from = start_pos + 2;
 		}
 
 		return str;
