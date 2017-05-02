@@ -8,6 +8,7 @@
 enum CommType
 {
 	TYPE_JSON,
+	TYPE_STRING,
 };
 
 enum StreamType

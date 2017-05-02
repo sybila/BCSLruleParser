@@ -41,7 +41,7 @@ namespace RuleParser
 		{
 			ch = nextChar();
 			if (m_expected.top() != ch)
-				throw InvalidSyntax(getPos(), std::string(1, ch), m_expected.top());
+				throw InvalidSyntax(getPos() - 1, std::string(1, ch), m_expected.top());
 
 			m_expected.pop();
 			tok.append(ch);
