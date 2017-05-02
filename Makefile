@@ -13,7 +13,7 @@ all: ruleparser
 ruleparser: $(BUILDDIR)/main.o $(BUILDDIR)/parser.o $(BUILDDIR)/tokenizer.o
 	$(CC) $(BUILDDIR)/main.o $(BUILDDIR)/parser.o $(BUILDDIR)/tokenizer.o -o $(BINDIR)/rule_parser
 
-python: $(BUILDDIR)/parser.o $(BUILDDIR)/tokenizer.o $(BUILDDIR)/interface_wrap.o $(BUILDDIR)/interface.o
+python: $(BUILDDIR)/parser.o $(BUILDDIR)/tokenizer.o
 	swig -outdir $(SWIGDIR) -c++ -python $(SWIGDIR)/interface.i
 	$(CC) -c $(SWIGDIR)/interface_wrap.cxx -o $(BUILDDIR)/interface_wrap.o -I$(SRCDIR) $(PYINC)
 	$(CC) -c $(SWIGDIR)/interface.cpp -o $(BUILDDIR)/interface.o -I$(SRCDIR)
