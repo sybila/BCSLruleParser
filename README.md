@@ -1,4 +1,10 @@
-Requirements: swig, g++ v. 5.x, python-x-dev
+**Requirements**: swig, g++ v. 5.x, python-x-dev
+
+Build using `make pv=<myPython> <myPython>`
+
+where myPython is desired python version.
+
+---
 
 usage: rule_parser \<communication_type\> \<input_type\> \<output_type\>
 - communication_type: json

@@ -4,8 +4,8 @@ BINDIR=bin
 SWIGDIR=swig
 CC=g++ $(CFLAGS)
 CFLAGS=-std=c++14 -Wall -fPIC
-PYINC=$(shell pkg-config --cflags python3)
-PYLIB=$(shell pkg-config --libs python3)
+PYINC=$(shell pkg-config --cflags $(pv))
+PYLIB=$(shell pkg-config --libs $(pv))
 .PHONY: all ruleparser python clean
 
 all: ruleparser
