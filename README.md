@@ -1,3 +1,5 @@
+Requirements: swig, g++ v. 5.x, python-x-dev
+
 usage: rule_parser \<communication_type\> \<input_type\> \<output_type\>
 - communication_type: json
 - input_type: stream, file:\<path\>, eq:"equation string"
