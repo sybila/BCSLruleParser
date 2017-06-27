@@ -4,8 +4,8 @@ BINDIR=bin
 SWIGDIR=swig
 CC=g++ $(CFLAGS)
 CFLAGS=-std=c++14 -fPIC -O2
-python_INC=$(shell pkg-config --cflags python)
-python_LIB=$(shell pkg-config --libs python)
+python_INC=$(shell pkg-config --cflags $(pv))
+python_LIB=$(shell pkg-config --libs $(pv))
 php_INC=$(shell php-config --includes)
 php_LIB=$(shell php-config --ldflags)
 LANGUAGES=php python
