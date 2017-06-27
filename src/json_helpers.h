@@ -62,14 +62,14 @@ namespace JSON
 	void convertChildren(std::ostream& os, Node* node)
 	{
 		bool first = true;
-		for (Node* child : node->getChildren())
+		for (const std::unique_ptr<Node>& child : node->getChildren())
 		{
 			if (first)
 				first = false;
 			else
 				os << ",";
 
-			convertTree(os, child);
+			convertTree(os, child.get());
 		}
 	}
 

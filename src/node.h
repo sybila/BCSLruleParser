@@ -1,6 +1,7 @@
 #ifndef NODES_H
 #define NODES_H
 
+#include <memory>
 #include <vector>
 #include "token.h"
 
@@ -32,23 +33,22 @@ namespace RuleParser
 
 	struct Node
 	{
-		using CHILDREN_TYPE = std::vector<Node*>;
+		using CHILDREN_TYPE = std::vector<std::unique_ptr<Node>>;
 
 		Node(NodeType type) : Node(type, NODE_CTYPE_NODE) {}
+		virtual ~Node() = default;
 
-		void addChild(Node* child) { children.push_back(child); child->m_parent = this; }
+		void addChild(Node* child) { children.emplace_back(child); }
 		NodeType getType() const { return m_type; }
 		NodeClassType getClass() const { return m_ctype; }
-		Node* getParent() const { return m_parent; }
 		const CHILDREN_TYPE& getChildren() const { return children; }
 
 	protected:
-		Node(NodeType type, NodeClassType ctype) : m_ctype(ctype), m_type(type), m_parent(nullptr) {}
+		Node(NodeType type, NodeClassType ctype) : m_ctype(ctype), m_type(type) {}
 
 	private:
 		NodeClassType m_ctype;
 		NodeType m_type;
-		Node* m_parent;
 		CHILDREN_TYPE children;
 	};
 
@@ -66,10 +66,10 @@ namespace RuleParser
 	struct EntityNode : public Node
 	{
 		EntityNode(NodeType type, Node* entity) : Node(type, NODE_CTYPE_ENTITY), entity(entity) {}
-		Node* getEntity() const	{ return entity; }
+		Node* getEntity() const { return entity.get(); }
 
 	private:
-		Node* entity;
+		std::unique_ptr<Node> entity;
 	};
 
 }

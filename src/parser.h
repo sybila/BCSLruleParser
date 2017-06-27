@@ -15,14 +15,13 @@ namespace RuleParser
 		Parser(std::string equation) : m_tokenizer(Tokenizer(equation)), m_equation(equation), m_tree(nullptr) {}
 
 		void parse();
-		Node* getTree() const { return m_tree; }
-		void deleteTree() { deleteTreeHelper(m_tree); }
+		std::shared_ptr<Node> getTree() const { return m_tree; }
 
 	private:
 		Tokenizer m_tokenizer;
 		std::string m_equation;
 		Token m_lastToken;
-		Node* m_tree;
+		std::shared_ptr<Node> m_tree;
 
 		bool isEquals() const { return m_lastToken.type == TOKEN_EQUIVALENT || m_lastToken.type == TOKEN_IMPLIES; }
 		void nextToken()
@@ -36,8 +35,6 @@ namespace RuleParser
 		void expect(std::initializer_list<TokenType> tokens);
 		Token expectGet(std::initializer_list<TokenType> tokens);
 		void expectedError(std::initializer_list<TokenType> tokens) { throw InvalidSyntaxToken(m_lastToken.start, m_lastToken.value, tokens); }
-
-		void deleteTreeHelper(Node* node);
 
 		void parseStateEntity(Node* parent);
 		void parsePartialCompositionChildren(Node* parent);

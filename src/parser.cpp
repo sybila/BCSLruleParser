@@ -184,23 +184,13 @@ namespace RuleParser
 	void Parser::parse()
 	{
 		try {
-			m_tree = new Node(NODE_SEMICOLON);
-			parseEquationPart(m_tree);
-			parseVariablePart(m_tree);
+			m_tree.reset(new Node(NODE_SEMICOLON));
+			parseEquationPart(m_tree.get());
+			parseVariablePart(m_tree.get());
 		}
 		catch (const EofException&) {
 			;
 		}
-	}
-
-	void Parser::deleteTreeHelper(Node* node)
-	{
-		for (Node* child : node->getChildren())
-			deleteTreeHelper(child);
-		if (node->getClass() == NODE_CTYPE_ENTITY)
-			deleteTreeHelper(reinterpret_cast<EntityNode*>(node)->getEntity());
-
-		delete node;
 	}
 
 }

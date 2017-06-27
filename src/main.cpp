@@ -19,9 +19,8 @@ void jsonCommunicate(std::istream& in, std::ostream& out)
 		try {
 			Parser p(line);
 			p.parse();
-			JSON::convertTree(out, p.getTree());
+			JSON::convertTree(out, p.getTree().get());
 			out << std::endl;
-			p.deleteTree();
 		}
 		catch (const InvalidSyntax& e) {
 			JSON::convertException(out, e);
@@ -51,9 +50,8 @@ void stringCommunicate(std::istream& in, std::ostream& out)
 		try {
 			Parser p(line);
 			p.parse();
-			JSON::convertTree(out, p.getTree());
+			JSON::convertTree(out, p.getTree().get());
 			out << std::endl;
-			p.deleteTree();
 		}
 		catch (const InvalidSyntax& e) {
 			std::cout << "Unexpected " << e.unexpected << " at " << e.start << ", expecting: " << std::string(1, e.expected) << std::endl;
