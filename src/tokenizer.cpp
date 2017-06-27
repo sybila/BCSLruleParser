@@ -61,7 +61,7 @@ namespace RuleParser
 			case ')': tok.type = TOKEN_RIGHT_BRACKET; return;
 			case '{': tok.type = TOKEN_LEFT_BRACE; return;
 			case '}': tok.type = TOKEN_RIGHT_BRACE; return;
-			case '|': tok.type = TOKEN_VERT_LINE; return;
+			case ',': tok.type = TOKEN_COMMA; return;
 			case '.': tok.type = TOKEN_DOT; return;
 			case '?': tok.type = TOKEN_VARIABLE; m_expected.push('X'); return;
 			case ':': tok.type = TOKEN_DOUBLECOLON; m_expected.push(':'); return;

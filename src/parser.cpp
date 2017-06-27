@@ -37,7 +37,7 @@ namespace RuleParser
 		current->addChild(simpNode);
 		parseStateEntity(simpNode);
 
-		while (m_lastToken.type == TOKEN_VERT_LINE)
+		while (m_lastToken.type == TOKEN_COMMA)
 		{
 			nextToken();
 			Node* simpNode = new TokenNode(NODE_SIMPLE, expectGet({TOKEN_ENT_NAME, TOKEN_VARIABLE}));
