@@ -21,7 +21,6 @@ namespace JSON
 			case TOKEN_LEFT_BRACE: return "{";
 			case TOKEN_RIGHT_BRACE: return "}";
 			case TOKEN_SEMICOLON: return ";";
-			case TOKEN_VERT_LINE: return "|";
 			case TOKEN_VARIABLE: return "?X";
 			case TOKEN_IMPLIES: return "=>";
 			case TOKEN_PLUS: return "+";
