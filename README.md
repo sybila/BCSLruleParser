@@ -1,15 +1,21 @@
-**Requirements**: swig, g++ v. 5.x, python-x-dev
+**Requirements**: cmake, swig, g++ v. 5.x, python-x-dev
 
-Build using `make pv=<myPython> <myPython>`
-
-where myPython is desired python version.
+Build using cmake
+Options list:
+WITH_BIN, WITH_PHP, WITH_PYTHON - self-explanatory
+Example build with binaries and python bindings (supposing you are in a source directory):
+    mkdir build
+    cd build
+    cmake -DWITH_BIN=1 -DWITH_PYTHON=1 ../
+    make
+Binaries are then in build/main, python bindings in build/swig/python
 
 ---
 
-usage: rule_parser \<communication_type\> \<input_type\> \<output_type\>
-- communication_type: json
+usage: RuleParserBin \<communication_type\> \<input_type\> \<output_type\>
+- communication_type: json, string
 - input_type: stream, file:\<path\>, eq:"equation string"
-- output_type: stream, file:\<path\>
+- output_type: stream, file:\<path\>, string
 
 Each equation to parse is one line on the input  
 For each line on the input there is a line on the output containing JSON response: either **SEMICOLON** node or {"error":1, "start": int, "unexpected": "token name", "expected": ["token", "names"]}

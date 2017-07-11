@@ -68,10 +68,10 @@ int main(int argc, const char* argv[])
 {
 	if (argc != 4)
 	{
-		std::cerr << "Usage: equation_parser <communication_type> <input_type> <output_type>" << std::endl
-				<< "communication_type: json" << std::endl
+		std::cerr << "Usage: RuleParserBin <communication_type> <input_type> <output_type>" << std::endl
+				<< "communication_type: json, string" << std::endl
 				<< "input_type: stream, file:<path>" << std::endl
-				<< "output_type: stream, file:<path>" << std::endl;
+				<< "output_type: stream, file:<path>, string" << std::endl;
 		return 1;
 	}
 
