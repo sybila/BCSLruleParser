@@ -131,6 +131,8 @@ namespace RuleParser
 		nextToken();
 
 		if(isEquals()) {
+			current->addChild(new Node(NODE_EQUATION_SIDE)); // add empty node
+
 			current->setToken(m_lastToken);
 			nextToken();
 			parseEquationSide(current);
@@ -148,6 +150,8 @@ namespace RuleParser
 
 			if(m_lastToken.type != TOKEN_EOF)
 				parseEquationSide(current);
+			else
+				current->addChild(new Node(NODE_EQUATION_SIDE)); // add empty node
 		}
 	}
 
@@ -165,7 +169,10 @@ namespace RuleParser
 	void Parser::parseVariablePart(Node* parent)
 	{
 		if(m_lastToken.type == TOKEN_EOF)
+		{
+			parent->addChild(new TokenNode(NODE_VARIABLE)); // add empty node
 			return;
+		}
 
 		expect({TOKEN_SEMICOLON});
 
@@ -188,9 +195,7 @@ namespace RuleParser
 			parseEquationPart(m_tree.get());
 			parseVariablePart(m_tree.get());
 		}
-		catch (const EofException&) {
-			;
-		}
+		catch (const EofException&) {}
 	}
 
 }

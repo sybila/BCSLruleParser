@@ -31,20 +31,20 @@ Every node has "type" and "children" values, some of them have "token" or "entit
 - "entity": child node
 
 There are 11 possible node types:
-- **SEMICOLON** = 9 (items split with ;, 1 or 2 children, **EQUATION** always, **VARIABLE** optional)
+- **SEMICOLON** = 9 (items split with ;, 2 children, **EQUATION** and **VARIABLE**)
 
-_
-- **EQUATION** = 1 (always first child of **SEMICOLON**, items split with either <=> or =>, 1 or 2 children of type **EQUATION_SIDE**)
-- **EQUATION_SIDE** = 2 (items split with +, 1 or more children of type **STOICHIOMETRY**)
+Equation part:
+- **EQUATION** = 1 (items split with either <=> or =>, 2 children of type **EQUATION_SIDE**)
+- **EQUATION_SIDE** = 2 (items split with +, 0 or more children of type **STOICHIOMETRY**)
 - **STOICHIOMETRY** = 3 (has token, 1 child of type **RULE_AGENT**)
 - **RULE_AGENT** = 4 (items split with ::, 1 or more children of type **FULL_COMPOSITION**)
 - **FULL_COMPOSITION** = 5 (items split with ., 1 or more children of type **PARTIAL_COMPOSITION**)
 - **PARTIAL_COMPOSITION** = 6 (has entity SIMPLE, format E(A|B), children are in brackets, 0 or more children of type **SIMPLE**)
 - **SIMPLE** = 8 (has token, 0 or 1 children of type STATE)
-- **STATE** = 7 (has token, 0 children)
+- **STATE** = 7 (has token, no children)
 
-_
-- **VARIABLE** = 10 (always second child of **SEMICOLON** if present, has token, 1 or more children of type **VARIABLE_ENTITY**)
-- **VARIABLE_ENTITY** = 11 (has token, 0 children)
+Variable part:
+- **VARIABLE** = 10 (has token (may be empty), 0 or more children of type **VARIABLE_ENTITY**)
+- **VARIABLE_ENTITY** = 11 (has token, no children)
 
 Every one of **SEMICOLON**, **EQUATION**, **EQUATION_SIDE**, **STOICHIOMETRY**, **RULE_AGENT**, **FULL_COMPOSITION**, **PARTIAL_COMPOSITION**, **SIMPLE** nodes is present at least once in each valid equation tree.
