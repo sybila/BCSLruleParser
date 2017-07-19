@@ -1,2 +1,2 @@
-%module RuleParser
+%module RuleParserPy
 %include "../interface.i"

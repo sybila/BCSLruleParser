@@ -1,2 +1,2 @@
-%module RuleParser
+%module RuleParserPhp
 %include "../interface.i"
