@@ -1,13 +1,17 @@
 **Requirements**: cmake, swig, g++ v. 5.x, python-x-dev
 
 Build using cmake
+
 Options list:
 WITH_BIN, WITH_PHP, WITH_PYTHON - self-explanatory
+
 Example build with binaries and python bindings (supposing you are in a source directory):
-    mkdir build
-    cd build
-    cmake -DWITH_BIN=1 -DWITH_PYTHON=1 ../
-    make
+
+```mkdir build
+cd build
+cmake -DWITH_BIN=1 -DWITH_PYTHON=1 ../
+make```
+
 Binaries are then in build/main, python bindings in build/swig/python
 
 ---
