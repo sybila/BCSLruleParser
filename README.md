@@ -10,7 +10,8 @@ Example build with binaries and python bindings (supposing you are in a source d
 ```mkdir build
 cd build
 cmake -DWITH_BIN=1 -DWITH_PYTHON=1 ../
-make```
+make
+```
 
 Moreover, for `python 2` use `-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so`
 
