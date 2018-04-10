@@ -1,21 +1,35 @@
 **Requirements**: cmake, swig, g++ v. 5.x, python-x-dev
+**Requirements-JS**: Emscripten
 
 Build using cmake
 
 Options list:
-WITH_BIN, WITH_PHP, WITH_PYTHON - self-explanatory
+WITH_BIN, WITH_PHP, WITH_PHP7, WITH_PYTHON - self-explanatory
+WITH_JS/WITH_WASM - build into JavaScript as asm.js or WebAssembly (requires Emscripten)
 
 Example build with binaries and python bindings (supposing you are in a source directory):
 
 ```mkdir build
+mkdir bin
 cd build
-cmake -DWITH_BIN=1 -DWITH_PYTHON=1 ../
+cmake -DWITH_BIN=1 -DWITH_PYTHON=1 -DCMAKE_INSTALL_PREFIX=../bin ../
 make
-```
+make install```
 
 Moreover, for `python 2` use `-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so`
 
-Binaries are then in build/main, python bindings in build/swig/python
+Binaries are then in bin/main, python bindings in bin/lib/python
+
+Example build with WebAssembly binary (assuming you are in a source directory and have activated emsdk environment):
+
+```mkdir build
+mkdir bin
+cd build
+cmake -DWITH_WASM=1 -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_INSTALL_PREFIX=../bin
+make
+make install```
+
+Generated files are then in bin/js
 
 ---
 
