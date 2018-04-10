@@ -14,7 +14,8 @@ mkdir bin
 cd build
 cmake -DWITH_BIN=1 -DWITH_PYTHON=1 -DCMAKE_INSTALL_PREFIX=../bin ../
 make
-make install```
+make install
+```
 
 Moreover, for `python 2` use `-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so`
 
@@ -27,7 +28,8 @@ mkdir bin
 cd build
 cmake -DWITH_WASM=1 -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_INSTALL_PREFIX=../bin
 make
-make install```
+make install
+```
 
 Generated files are then in bin/js
 
