@@ -10,6 +10,7 @@ if (UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
+add_subdirectory(js)
 add_subdirectory(main)
 add_subdirectory(src)
 add_subdirectory(swig)
