@@ -21,4 +21,4 @@ SWIG_LINK_LIBRARIES(RuleParserPhp RuleParserLib)
 SWIG_LINK_LIBRARIES(RuleParserPhp ${PHP_LIBRARIES})
 
 install(TARGETS ${SWIG_MODULE_RuleParserPhp_REAL_NAME}  DESTINATION lib/php)
-install(FILES ${CMAKE_BINARY_DIR}/swig/python/RuleParserPhp.php DESTINATION lib/php)
+install(FILES ${CMAKE_BINARY_DIR}/swig/php/RuleParserPhp.php DESTINATION lib/php)
